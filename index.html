@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT-Storage – Support</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0e17;
+      --bg2: #111827;
+      --surface: #161d2e;
+      --surface2: #1e2740;
+      --border: rgba(99,130,255,0.12);
+      --accent: #4f7aff;
+      --accent2: #7c9dff;
+      --accent-glow: rgba(79,122,255,0.25);
+      --text: #e8edf8;
+      --text-muted: #8b9abf;
+      --text-dim: #4a5578;
+      --green: #34d399;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,122,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,122,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── AMBIENT ── */
+    .ambient {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ambient-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(79,122,255,0.12) 0%, transparent 70%);
+      top: -200px; left: -200px;
+    }
+    .ambient-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(52,211,153,0.07) 0%, transparent 70%);
+      bottom: 100px; right: -100px;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,14,23,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-icon {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, var(--accent), #6b96ff);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-icon svg { width: 16px; height: 16px; }
+    .nav-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 0 64px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--accent2);
+      background: rgba(79,122,255,0.1);
+      border: 1px solid rgba(79,122,255,0.2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    h1 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    h1 strong {
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+
+    /* ── CONTACT CARD ── */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 64px;
+      text-align: left;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .contact-card:hover {
+      border-color: rgba(79,122,255,0.3);
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+    .contact-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, rgba(79,122,255,0.15), rgba(79,122,255,0.05));
+      border: 1px solid rgba(79,122,255,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 22px; height: 22px; color: var(--accent2); }
+    .contact-body { flex: 1; }
+    .contact-label {
+      font-size: 11px;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .contact-email {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .contact-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .btn-mail {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--sans);
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-mail:hover {
+      background: var(--accent2);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    .btn-mail svg { width: 15px; height: 15px; }
+
+    /* ── SECTION TITLE ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* ── DOCS GRID ── */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+    @media (max-width: 560px) {
+      .docs-grid { grid-template-columns: 1fr; }
+      .contact-card { flex-direction: column; text-align: center; }
+      .btn-mail { width: 100%; justify-content: center; }
+      .contact-body { text-align: center; }
+    }
+
+    .doc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .25s, transform .2s, box-shadow .25s;
+    }
+    .doc-card:hover {
+      border-color: rgba(79,122,255,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(79,122,255,0.1);
+    }
+    .doc-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .doc-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .doc-icon.privacy { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
+    .doc-icon.terms   { background: rgba(79,122,255,0.1); border: 1px solid rgba(79,122,255,0.2); }
+    .doc-icon svg { width: 18px; height: 18px; }
+    .doc-icon.privacy svg { color: var(--green); }
+    .doc-icon.terms svg   { color: var(--accent2); }
+    .doc-arrow {
+      color: var(--text-dim);
+      transition: transform .2s, color .2s;
+    }
+    .doc-card:hover .doc-arrow { transform: translate(3px, -3px); color: var(--accent2); }
+    .doc-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .doc-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .doc-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      background: var(--surface2);
+      padding: 3px 8px;
+      border-radius: 4px;
+      align-self: flex-start;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(5,8,15,0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+    .modal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 720px;
+      margin: auto;
+      overflow: hidden;
+      animation: modalIn .22s ease;
+    }
+    @keyframes modalIn {
+      from { opacity:0; transform: scale(0.97) translateY(8px); }
+      to   { opacity:1; transform: scale(1) translateY(0); }
+    }
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg2);
+      z-index: 10;
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .modal-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .modal-close {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, color .2s;
+      flex-shrink: 0;
+    }
+    .modal-close:hover { background: var(--surface2); color: var(--text); }
+    .modal-close svg { width: 14px; height: 14px; pointer-events: none; }
+    .modal-body {
+      padding: 28px 24px 32px;
+    }
+    .modal-section { margin-bottom: 28px; }
+    .modal-section:last-child { margin-bottom: 0; }
+    .modal-section h3 {
+      font-size: 12px;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 12px;
+    }
+    .modal-section p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    .modal-section p:last-child { margin-bottom: 0; }
+
+    /* ── FAQ ── */
+    .faq { margin-bottom: 80px; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 18px 0;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: color .2s;
+    }
+    .faq-q:hover { color: var(--accent2); }
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      color: var(--text-dim);
+      transition: transform .25s;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+    .faq-item.open .faq-a { max-height: 200px; }
+    .faq-a p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding-bottom: 18px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+    }
+    .footer-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color .2s;
+      cursor: pointer;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <span class="nav-name">IT-Storage</span>
+    </a>
+    <div class="nav-links">
+      <a href="#contact">Contact</a>
+      <a href="#legal">Legal</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Support Center
+    </div>
+    <h1>How can we<br><strong>help you?</strong></h1>
+    <p class="hero-sub">IT device inventory management, simplified. Get in touch with us — we're here to help.</p>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact">
+    <div class="contact-card">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+      </div>
+      <div class="contact-body">
+        <div class="contact-label">Email support</div>
+        <div class="contact-email">itstorageapp@gmail.com</div>
+        <div class="contact-note">We typically respond within 1–2 business days.</div>
+      </div>
+      <a href="mailto:itstorageapp@gmail.com" class="btn-mail">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>
+        </svg>
+        Send email
+      </a>
+    </div>
+  </div>
+
+  <!-- LEGAL DOCS -->
+  <div id="legal" style="margin-bottom: 16px;">
+    <div class="section-label">Legal documents</div>
+  </div>
+  <div class="docs-grid" style="margin-bottom: 80px;">
+
+    <a href="#" class="doc-card" onclick="openModal('privacy'); return false;">
+      <div class="doc-card-header">
+        <div class="doc-icon privacy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <svg class="doc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+          <path d="M7 17 17 7M7 7h10v10"/>
+        </svg>
+      </div>
+      <div class="doc-title">Privacy Policy</div>
+      <div class="doc-desc">How we collect, use, and protect your personal data in accordance with GDPR.</div>
+      <div class="doc-tag">v2026-02-01</div>
+    </a>
+
+    <a href="#" class="doc-card" onclick="openModal('terms'); return false;">
+      <div class="doc-card-header">
+        <div class="doc-icon terms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <svg class="doc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+          <path d="M7 17 17 7M7 7h10v10"/>
+        </svg>
+      </div>
+      <div class="doc-title">Terms of Service</div>
+      <div class="doc-desc">Rules and conditions governing your use of the IT-Storage application.</div>
+      <div class="doc-tag">v2026-02-01</div>
+    </a>
+
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq">
+    <div class="section-label">Frequently asked questions</div>
+    <div class="faq">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What is the free plan limit?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>The free plan allows you to manage up to 12 IT devices. To manage an unlimited number of devices and unlock cloud features, upgrade to Premium.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I cancel my subscription?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>On Android: go to Google Play → Settings → Subscriptions. On iOS: go to Settings → Apple ID → Subscriptions. Cancel at least 24 hours before your renewal date. Access continues until the end of the current billing period.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I delete my account and data?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>Go to Settings → Account → Delete account within the app, or send a request to itstorageapp@gmail.com. Your account and data will be permanently deleted within 14 business days.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is my data stored securely?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>Yes. Data is encrypted in transit (HTTPS/TLS) and at rest (AES-256). We use Google Firebase infrastructure and follow GDPR requirements. Passwords are always stored hashed — never in plain text.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What platforms is IT-Storage available on?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>IT-Storage is available on iOS (iPhone with iOS 13.0 or newer) and Android (Android 8.0 or newer). Download it from the App Store or Google Play.</p></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 Filip Dąbrowski · Lublin, Poland</span>
+    <div class="footer-links">
+      <a onclick="openModal('privacy')">Privacy Policy</a>
+      <a onclick="openModal('terms')">Terms of Service</a>
+      <a href="mailto:itstorageapp@gmail.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL PRIVACY -->
+<div class="modal-overlay" id="modal-privacy">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">Privacy Policy</div>
+        <div class="modal-date">Effective: February 1, 2026</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('privacy')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h3>1. General Provisions</h3>
+        <p>This Privacy Policy defines the principles of processing and protecting personal data provided by Users in connection with their use of the IT-Storage mobile application. The Controller is Filip Dąbrowski, ul. Wędrowna 12/20, 20-819 Lublin, Poland. Contact: itstorageapp@gmail.com.</p>
+        <p>Data is processed in accordance with GDPR (Regulation EU 2016/679) and applicable Polish law.</p>
+      </div>
+      <div class="modal-section">
+        <h3>2. What data do we collect?</h3>
+        <p><strong style="color:var(--text)">Registration:</strong> email address, hashed password, name or nickname. Optionally: Google/Apple account data.</p>
+        <p><strong style="color:var(--text)">Automatically:</strong> device model, OS version, app version, Device ID, login timestamps, usage statistics, crash reports, approximate location based on IP.</p>
+        <p><strong style="color:var(--text)">Payments:</strong> handled exclusively by Google Play / App Store. We only receive confirmation of purchase status — no payment card data.</p>
+        <p><strong style="color:var(--text)">Content:</strong> IT device data you enter (names, types, descriptions, locations) — used solely to provide the service.</p>
+      </div>
+      <div class="modal-section">
+        <h3>3. Data transfers &amp; storage</h3>
+        <p>Data is processed by Google LLC (Firebase) with safeguards including Standard Contractual Clauses. Account data is retained until deletion. Activity logs are kept for 12 months. Billing records for 6 years as required by law. After account deletion, personal data is removed within 14 days.</p>
+      </div>
+      <div class="modal-section">
+        <h3>4. Your rights</h3>
+        <p>You have the right to: access, rectify, erase, restrict processing, portability, and object to processing. You may also file a complaint with the Polish Data Protection Authority (UODO). Send requests to itstorageapp@gmail.com — we respond within 14 business days.</p>
+      </div>
+      <div class="modal-section">
+        <h3>5. Security</h3>
+        <p>All data is encrypted in transit (HTTPS/TLS) and at rest (AES-256). Passwords are stored hashed. We maintain incident response procedures and notify the supervisory authority within 72 hours of a confirmed breach if required.</p>
+      </div>
+      <div class="modal-section">
+        <h3>16. Contact</h3>
+        <p>Email: itstorageapp@gmail.com<br>Address: ul. Wędrowna 12/20, 20-819 Lublin, Poland</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TERMS -->
+<div class="modal-overlay" id="modal-terms">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">Terms of Service</div>
+        <div class="modal-date">Effective: February 1, 2026</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('terms')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h3>1. General Provisions</h3>
+        <p>These Terms govern the use of the IT-Storage mobile application (iOS &amp; Android), provided by Filip Dąbrowski, ul. Wędrowna 12/20, 20-819 Lublin, Poland (itstorageapp@gmail.com) in a SaaS model using Google Firebase infrastructure. Using the application constitutes acceptance of these Terms.</p>
+      </div>
+      <div class="modal-section">
+        <h3>2. Plans &amp; Features</h3>
+        <p><strong style="color:var(--text)">Free plan:</strong> up to 12 devices, basic device management (name, type, description, location), secure login.</p>
+        <p><strong style="color:var(--text)">Premium plan:</strong> unlimited devices, plus planned features — automatic backups, push notifications, change history, data export (PDF/CSV/Excel), API access, and inventory sharing.</p>
+      </div>
+      <div class="modal-section">
+        <h3>3. Subscription &amp; Payments</h3>
+        <p><strong style="color:var(--text)">Promotional prices (first 6 months):</strong> Monthly $6.99 / Annual $56.99 (~35% savings).</p>
+        <p><strong style="color:var(--text)">Standard prices:</strong> Monthly $8.99 / Annual $60.99 (~40% savings).</p>
+        <p>Subscriptions renew automatically. Cancel at least 24h before renewal via Google Play or App Store settings. No refund for the current billing period. Price changes announced 30 days in advance.</p>
+      </div>
+      <div class="modal-section">
+        <h3>4. Right of Withdrawal (Consumers)</h3>
+        <p>Consumers have 14 days from the date of agreement to withdraw. Send your statement to itstorageapp@gmail.com. If you start the subscription before 14 days, you consent to early service commencement and the withdrawal right expires upon full use.</p>
+      </div>
+      <div class="modal-section">
+        <h3>5. User Obligations &amp; Prohibited Use</h3>
+        <p>Use the app in accordance with the law and these Terms. Prohibited: unauthorized access, violating third-party rights, using bots or scripts without permission, sharing your account, or any activity that disrupts the application.</p>
+      </div>
+      <div class="modal-section">
+        <h3>6. Complaints</h3>
+        <p>Submit complaints to itstorageapp@gmail.com or in writing to ul. Wędrowna 12/20, 20-819 Lublin, Poland. We handle complaints within 14 days. EU ODR platform: ec.europa.eu/consumers/odr.</p>
+      </div>
+      <div class="modal-section">
+        <h3>7. Governing Law</h3>
+        <p>Polish law applies. For consumers, disputes are resolved by competent courts. The Polish language version of these Terms is binding. Terms effective from February 1, 2026.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById('modal-' + id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', e => {
+      if (e.target === el) {
+        el.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(el => {
+        el.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
