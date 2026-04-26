@@ -131,6 +131,150 @@
     }
     .nav-links a:hover { color: var(--text); }
 
+    /* ── MARKETING HERO ── */
+    .marketing-hero {
+      padding: 80px 0 72px;
+      text-align: center;
+    }
+    .app-icon {
+      width: 96px; height: 96px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #1a2540, #0f1829);
+      border: 1px solid var(--border);
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,122,255,0.15);
+      overflow: hidden;
+    }
+    .app-icon img {
+      width: 96px; height: 96px;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+    .app-tagline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .marketing-h1 {
+      font-size: clamp(38px, 7vw, 62px);
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .marketing-h1 strong {
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .marketing-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.65;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+    .store-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 22px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-family: var(--sans);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .store-btn:hover { transform: translateY(-2px); }
+    .store-btn-primary {
+      background: var(--text);
+      color: var(--bg);
+      box-shadow: 0 8px 32px rgba(232,237,248,0.15);
+    }
+    .store-btn-primary:hover { box-shadow: 0 12px 40px rgba(232,237,248,0.25); }
+    .store-btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .store-btn-secondary:hover { border-color: rgba(79,122,255,0.3); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+    .store-btn-icon { flex-shrink: 0; }
+    .store-btn-icon svg { width: 22px; height: 22px; display: block; }
+    .store-btn-text { text-align: left; }
+    .store-btn-text small { display: block; font-size: 10px; opacity: 0.65; letter-spacing: 0.04em; margin-bottom: 1px; }
+    .store-btn-text strong { display: block; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 80px;
+    }
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: left;
+    }
+    .feature-card-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(79,122,255,0.1);
+      border: 1px solid rgba(79,122,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .feature-card-icon svg { width: 17px; height: 17px; color: var(--accent2); }
+    .feature-card-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .feature-card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 64px;
+    }
+
     /* ── HERO ── */
     .hero {
       padding: 80px 0 64px;
@@ -510,13 +654,14 @@
   <div class="nav-inner">
     <a href="#" class="nav-logo">
       <div class="nav-icon">
-      <div class="nav-icon">
-  <img src="IT-Storage_Logo_160_big.png" alt="IT-Storage" style="width:30px;height:30px;border-radius:8px;object-fit:cover;" />
-</div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
       </div>
       <span class="nav-name">IT-Storage</span>
     </a>
     <div class="nav-links">
+      <a href="#download">Download</a>
       <a href="#contact">Contact</a>
       <a href="#legal">Legal</a>
       <a href="#faq">FAQ</a>
@@ -524,15 +669,100 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- MARKETING HERO -->
 <div class="wrap">
-  <div class="hero">
+  <div class="marketing-hero">
+
+    <div class="app-icon">
+      <img src="IT-Storage_Logo_160_big.png" alt="IT-Storage" />
+    </div>
+
+    <div class="app-tagline-badge">Available on iOS &amp; Android</div>
+
+    <h1 class="marketing-h1">Your IT inventory,<br><strong>finally under control.</strong></h1>
+
+    <p class="marketing-sub">IT-Storage helps you track every device you own — specs, locations, warranties, repair history and more. Built for home labs, freelancers, and IT teams.</p>
+
+    <div class="store-buttons" id="download">
+      <a href="https://apps.apple.com/app/id6743345507" class="store-btn store-btn-primary" target="_blank" rel="noopener">
+        <span class="store-btn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        </span>
+        <span class="store-btn-text">
+          <small>Download on the</small>
+          <strong>App Store</strong>
+        </span>
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.filip.itstorage" class="store-btn store-btn-secondary" target="_blank" rel="noopener">
+        <span class="store-btn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.22.97.15l13.2-7.62-2.8-2.8-11.37 10.27zm-1.7-20.1C1.18 4.04 1 4.53 1 5.06v13.88c0 .53.18 1.02.48 1.4l.08.07 7.77-7.77v-.18L1.56 3.69l-.08.07zM21.1 10.28l-2.89-1.67-3.13 3.13 3.13 3.13 2.91-1.68c.83-.48.83-1.26-.02-1.91zM4.15.24L17.35 7.86l-2.8 2.8L3.18.39C3.48.32 3.84.07 4.15.24z"/></svg>
+        </span>
+        <span class="store-btn-text">
+          <small>Get it on</small>
+          <strong>Google Play</strong>
+        </span>
+      </a>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="feature-card-title">Device Inventory</div>
+        <div class="feature-card-desc">Track all your devices with full specs, categories, and custom notes.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="feature-card-title">Warranty Tracking</div>
+        <div class="feature-card-desc">Never miss an expiring warranty. See status at a glance for every device.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="feature-card-title">Repair History</div>
+        <div class="feature-card-desc">Log every fix, note, and attachment. Full service history in one place.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="feature-card-title">Location Management</div>
+        <div class="feature-card-desc">Organize devices by room, office, or any custom location you define.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+        </div>
+        <div class="feature-card-title">Attachments</div>
+        <div class="feature-card-desc">Attach invoices, manuals, and documents directly to any device.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </div>
+        <div class="feature-card-title">Cloud Sync</div>
+        <div class="feature-card-desc">Your data synced securely across devices via Firebase. Always up to date.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="section-divider" style="position:relative;z-index:1;max-width:780px;margin:0 auto 64px;" />
+
+<!-- SUPPORT SECTION -->
+<div class="wrap">
+  <div class="hero" id="support">
     <div class="hero-badge">
       <span class="dot"></span>
       Support Center
     </div>
-    <h1>How can we<br><strong>help you?</strong></h1>
-    <p class="hero-sub">IT device inventory management, simplified. Get in touch with us — we're here to help.</p>
+    <h1>Need help?<br><strong>We've got you.</strong></h1>
+    <p class="hero-sub">Reach out by email — we typically respond within 1–2 business days.</p>
   </div>
 
   <!-- CONTACT -->
@@ -650,7 +880,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <span class="footer-copy">© 2026 FD </span>
+    <span class="footer-copy">© 2026 Filip Dąbrowski · Lublin, Poland</span>
     <div class="footer-links">
       <a onclick="openModal('privacy')">Privacy Policy</a>
       <a onclick="openModal('terms')">Terms of Service</a>
@@ -674,7 +904,7 @@
     <div class="modal-body">
       <div class="modal-section">
         <h3>1. General Provisions</h3>
-        <p>This Privacy Policy defines the principles of processing and protecting personal data provided by Users in connection with their use of the IT-Storage mobile application. Contact: itstorageapp@gmail.com.</p>
+        <p>This Privacy Policy defines the principles of processing and protecting personal data provided by Users in connection with their use of the IT-Storage mobile application. The Controller is Filip Dąbrowski, ul. Wędrowna 12/20, 20-819 Lublin, Poland. Contact: itstorageapp@gmail.com.</p>
         <p>Data is processed in accordance with GDPR (Regulation EU 2016/679) and applicable Polish law.</p>
       </div>
       <div class="modal-section">
@@ -698,7 +928,7 @@
       </div>
       <div class="modal-section">
         <h3>16. Contact</h3>
-        <p>Email: itstorageapp@gmail.com<br>Lublin, Poland</p>
+        <p>Email: itstorageapp@gmail.com<br>Address: ul. Wędrowna 12/20, 20-819 Lublin, Poland</p>
       </div>
     </div>
   </div>
@@ -719,7 +949,7 @@
     <div class="modal-body">
       <div class="modal-section">
         <h3>1. General Provisions</h3>
-        <p>These Terms govern the use of the IT-Storage mobile application (iOS &amp; Android), provided by FD, (itstorageapp@gmail.com) in a SaaS model using Google Firebase infrastructure. Using the application constitutes acceptance of these Terms.</p>
+        <p>These Terms govern the use of the IT-Storage mobile application (iOS &amp; Android), provided by Filip Dąbrowski, ul. Wędrowna 12/20, 20-819 Lublin, Poland (itstorageapp@gmail.com) in a SaaS model using Google Firebase infrastructure. Using the application constitutes acceptance of these Terms.</p>
       </div>
       <div class="modal-section">
         <h3>2. Plans &amp; Features</h3>
@@ -742,7 +972,7 @@
       </div>
       <div class="modal-section">
         <h3>6. Complaints</h3>
-        <p>Submit complaints to itstorageapp@gmail.com. We handle complaints within 14 days. EU ODR platform: ec.europa.eu/consumers/odr.</p>
+        <p>Submit complaints to itstorageapp@gmail.com or in writing to ul. Wędrowna 12/20, 20-819 Lublin, Poland. We handle complaints within 14 days. EU ODR platform: ec.europa.eu/consumers/odr.</p>
       </div>
       <div class="modal-section">
         <h3>7. Governing Law</h3>
